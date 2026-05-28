@@ -28,7 +28,10 @@ jobs:
 
       - name: Compile22
         run: |
-          make ARCH=arm64 dtbs -j$(nproc)
+          make ARCH=arm64 O=outcc \
+          CROSS_COMPILE=aarch64-none-linux-gnu- \
+          $(find ./arch/arm64/boot/dts/rockchip/ -name "*35*.dts" -exec basename {} .dts \; | xargs -I {} echo {}.dtb) \
+          -j$(nproc)
 
       # 上传编译好的 dtb 供下载
       - name: Upload DTB artifact
@@ -36,23 +39,24 @@ jobs:
         with:
           name: dtbssbb
           path: |
-            **/*.dtb
-            **/*.dts
+            outcc/
+         #   **/*.dtb
+         #   **/*.dts
           retention-days: 2
 
       # 这里改成你自己的 dts 路径和输出文件名
-      - name: Compile RK3568 DTB
+      - name: Compile RK3568 dts
         run: |
-          dtc -I dts -O dtb -W no-unit_address_vs_reg \
-            ./arch/arm64/boot/dts/rockchip/rk3568-evb4-lp3-v10.dtb \
-            -o rk3568-evb4-lp3-v10--.dtb
+          dtc -I dtb -O dts -W no-unit_address_vs_reg \
+          -s -H both -@ \
+          ./arch/arm64/boot/dts/rockchip/rk3568-evb4-lp3-v10.dtb \
+          -o rk3568-evb4-lp3-v10--.dts
 
       # 上传编译好的 dtb 供下载
       - name: Upload DTB artifact
         uses: actions/upload-artifact@v4
         with:
-          name: evb4dtb
+          name: evb4dtbss
           path: |
-            *.dtb
-            *.dts
+            rk3568-evb4-lp3-v10--.dts
           retention-days: 2
