@@ -39,12 +39,12 @@ jobs:
             **/*.dtb
             **/*.dts
           retention-days: 2
-                  
+
       # 这里改成你自己的 dts 路径和输出文件名
       - name: Compile RK3568 DTB
         run: |
           dtc -I dts -O dtb -W no-unit_address_vs_reg \
-            ./kernel/arch/arm64/boot/dts/rockchip/rk3568-evb4-lp3-v10.dtb \
+            ./arch/arm64/boot/dts/rockchip/rk3568-evb4-lp3-v10.dtb \
             -o rk3568-evb4-lp3-v10--.dtb
 
       # 上传编译好的 dtb 供下载
