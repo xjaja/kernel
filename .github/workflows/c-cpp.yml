@@ -21,7 +21,7 @@ jobs:
           sudo apt install -y device-tree-compiler\
             make gcc libssl-dev liblz4-tool \
             live-build bison flex fakeroot cmake
-            
+
       - name: Compile11
         run: |
           make ARCH=arm64 rockchip_linux_defconfig
@@ -36,8 +36,8 @@ jobs:
         with:
           name: dtbssbb
           path: |
-            *.dtb
-            *.dts
+            **/*.dtb
+            **/*.dts
           retention-days: 2
                   
       # 这里改成你自己的 dts 路径和输出文件名
