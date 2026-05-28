@@ -24,6 +24,10 @@ jobs:
             
       - name: Compile11
         run: |
+          make ARCH=arm64 rockchip_linux_defconfig
+
+      - name: Compile22
+        run: |
           make ARCH=arm64 dtbs -j$(nproc)
 
       # 上传编译好的 dtb 供下载
