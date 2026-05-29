@@ -24,6 +24,7 @@ jobs:
 
       - name: Compile11
         run: |
+          make ARCH=arm64 mrproper
           make ARCH=arm64 rockchip_linux_defconfig
 
       - name: Compile22
