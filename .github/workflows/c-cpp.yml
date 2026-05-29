@@ -28,7 +28,7 @@ jobs:
 
       - name: Compile22
         run: |
-          make ARCH=arm64 O=outcc \ 
+          make ARCH=arm64 O=outcc \
           CROSS_COMPILE=aarch64-none-linux-gnu- prepare
 
       - name: Compile33
