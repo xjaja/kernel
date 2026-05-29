@@ -1,4 +1,4 @@
-name: Build dts
+name: Build Firefly dts
 
 on:
   workflow_dispatch:
