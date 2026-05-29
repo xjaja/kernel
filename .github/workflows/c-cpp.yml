@@ -19,23 +19,28 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y device-tree-compiler \
-          make gcc libssl-dev liblz4-tool \
-          live-build bison flex fakeroot cmake \
-          gcc-aarch64-linux-gnu
+          make gcc wget libssl-dev liblz4-tool \
+          live-build bison flex fakeroot cmake
+
+      - name: Install gccnone
+        run: |
+          wget https://github.com/Firefly-rk-linux/prebuilts-gcc-linux-x86-aarch64-gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu/archive/refs/heads/main.zip -O gcc-arm-10.3-2021.07.zip
+            unzip gcc-arm-10.3-2021.07.zip
+            mv prebuilts-gcc-linux-x86-aarch64-gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu-main gcc-arm-gnu
 
       - name: Compile11
         run: |
           make ARCH=arm64 rockchip_linux_defconfig
-          make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- mrproper
+          make ARCH=arm64 CROSS_COMPILE=./gcc-arm-gnu/bin/aarch64-none-linux-gnu- mrproper
 
       - name: Compile22
         run: |
-          make ARCH=arm64 O=outccc CROSS_COMPILE=aarch64-none-linux-gnu- prepare
+          make ARCH=arm64 O=outccc CROSS_COMPILE=./gcc-arm-gnu/bin/aarch64-none-linux-gnu- prepare
 
       - name: Compile33
         run: |
           make ARCH=arm64 O=outccc \
-          CROSS_COMPILE=aarch64-none-linux-gnu- \
+          CROSS_COMPILE=./gcc-arm-gnu/bin/aarch64-none-linux-gnu- \
           $(find ./arch/arm64/boot/dts/rockchip/ -name "*35*.dts" | sed 's|arch/arm64/boot/dts/||;s|\.dts$|\.dtb|') \
           -j$(nproc)
 
