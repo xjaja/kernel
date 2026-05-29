@@ -51,9 +51,9 @@ jobs:
         with:
           name: dtbssbb
           path: |
-         #   outccc/
             outccc/*.dtb
             outccc/*.dts
+         #   outccc/
           retention-days: 2
 
       # 这里改成你自己的 dts 路径和输出文件名
