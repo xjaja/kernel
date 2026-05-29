@@ -29,12 +29,11 @@ jobs:
 
       - name: Compile22
         run: |
-          make ARCH=arm64 O=outcc \
-          CROSS_COMPILE=aarch64-none-linux-gnu- prepare
+          make ARCH=arm64 O=outccc CROSS_COMPILE=aarch64-none-linux-gnu- prepare
 
       - name: Compile33
         run: |
-          make ARCH=arm64 O=outcc \
+          make ARCH=arm64 O=outccc \
           CROSS_COMPILE=aarch64-none-linux-gnu- \
           $(find ./arch/arm64/boot/dts/rockchip/ -name "*35*.dts" | sed 's|arch/arm64/boot/dts/||;s|\.dts$|\.dtb|') \
           -j$(nproc)
