@@ -60,7 +60,7 @@ jobs:
 
       # 这里改成你自己的 dts 路径和输出文件名
       - name: Compile RK3568 dts
-        if: false
+        #if: false
         run: |
           dtc -I dtb -O dts \
           -s -H both -@ \
