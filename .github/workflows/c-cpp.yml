@@ -1,4 +1,4 @@
-name: Build dts
+name: Build Firefly dts
 
 on:
   workflow_dispatch:
@@ -51,9 +51,9 @@ jobs:
         with:
           name: dtbssbb
           path: |
-            outccc/
-         #   **/*.dtb
-         #   **/*.dts
+         #   outccc/
+            outccc/*.dtb
+            outccc/*.dts
           retention-days: 2
 
       # 这里改成你自己的 dts 路径和输出文件名
@@ -61,7 +61,7 @@ jobs:
         run: |
           dtc -I dtb -O dts -W no-unit_address_vs_reg \
           -s -H both -@ \
-          ./arch/arm64/boot/dts/rockchip/rk3568-evb4-lp3-v10.dtb \
+          ./outccc/arch/arm64/boot/dts/rockchip/rk3568-evb4-lp3-v10.dtb \
           -o rk3568-evb4-lp3-v10--.dts
 
       # 上传编译好的 dtb 供下载
