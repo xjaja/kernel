@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies (dtc device-tree-compiler)
         run: |
           sudo apt update
-          sudo apt install -y device-tree-compiler\
+          sudo apt install -y device-tree-compiler \
           make gcc libssl-dev liblz4-tool \
           live-build bison flex fakeroot cmake \
           gcc-aarch64-linux-gnu
