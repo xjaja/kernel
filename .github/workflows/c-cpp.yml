@@ -38,11 +38,12 @@ jobs:
         run: |
           make ARCH=arm64 O=outccc CROSS_COMPILE=aarch64-none-linux-gnu- prepare
 
+
+     #     $(find ./arch/arm64/boot/dts/rockchip/ -name "*356*.dts" | sed 's|arch/arm64/boot/dts/||;s|\.dts$|\.dtb|') \
       - name: Compile33
         run: |
           make ARCH=arm64 O=outccc \
           CROSS_COMPILE=aarch64-none-linux-gnu- \
-     #     $(find ./arch/arm64/boot/dts/rockchip/ -name "*356*.dts" | sed 's|arch/arm64/boot/dts/||;s|\.dts$|\.dtb|') \
           rk3568-evb2-lp4x-v10.dtb \
           -j$(nproc)
 
