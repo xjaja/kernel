@@ -19,8 +19,9 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y device-tree-compiler\
-            make gcc libssl-dev liblz4-tool \
-            live-build bison flex fakeroot cmake
+          make gcc libssl-dev liblz4-tool \
+          live-build bison flex fakeroot cmake \
+          gcc-aarch64-linux-gnu
 
       - name: Compile11
         run: |
