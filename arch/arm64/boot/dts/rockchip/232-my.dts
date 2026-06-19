@@ -11,18 +11,6 @@
 / {
     serial-number = "5182024030600284";
 
-    &chosen {
-        bootargs = "storagemedia=emmc ro rootwait console=ttyFIQ0 earlycon=uart8250,mmio32,0xfe660000 chip=rk3568";
-    };
-    
-    &backlight {
-        default-brightness-level = <0x80>;
-		lcd_backlight_max = <0xff>;
-		lcd_backlight_min = <0x32>;
-		lcd_pwm_pol = <0x01>;
-		enable-gpios = <&gpio3 0x1c 0x00>;
-        status = "disabled";
-    };
     
     backlight2 {
 		default-brightness-level = <0x80>;
@@ -109,6 +97,7 @@
 	};
 
 	lvds1-panel {
+		backlight = <&backlight1>;
 		bus-format = <0x1010>;
 		compatible = "simple-panel";
 		enable-delay-ms = <0x64>;
@@ -172,6 +161,29 @@
         regulator-min-microvolt = <3300000>;
         regulator-max-microvolt = <3300000>;        
 	};
+};
+
+&chosen {
+    bootargs = "storagemedia=emmc ro rootwait console=ttyFIQ0 earlycon=uart8250,mmio32,0xfe660000 chip=rk3568";
+};
+
+&backlight {
+    default-brightness-level = <0x80>;
+    lcd_backlight_max = <0xff>;
+    lcd_backlight_min = <0x32>;
+    lcd_pwm_pol = <0x01>;
+    enable-gpios = <&gpio3 0x1c 0x00>;
+    status = "disabled";
+};
+
+&backlight1 {
+    default-brightness-level = <0x80>;
+    lcd_backlight_max = <0xff>;
+    lcd_backlight_min = <0x32>;
+    lcd_pwm_pol = <0x01>;
+    enable-gpios = <&gpio3 0x1c 0x00>;
+    pwms = <&pwm7 0 25000 0>;
+    status = "disabled";
 };
 
 &pinctrl {
