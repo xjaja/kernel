@@ -64,8 +64,8 @@ jobs:
         run: |
           dtc -I dtb -O dts \
           -s -H both -@ \
-          ./outccc/arch/arm64/boot/dts/rockchip/rk3568-evb2-lp4x-v10.dtb \
-          -o rk3568-evb4-lp3-v10--.dts
+          ./outccc/arch/arm64/boot/dts/rockchip/232-my-3568.dtb \
+          -o 232-my-3568--.dts
 
       # 上传编译好的 dtb 供下载
       - name: Upload DTB artifact
