@@ -928,8 +928,7 @@
 	//assigned-clock-rates = <150000000>;
 	assigned-clock-rates = <200000000>;
 	assigned-clocks = <&cru 0x143>;
-	//pinctrl-0 = <&can1m1_pins>;
-	pinctrl-0 = <&can1m2_pins>;
+	pinctrl-0 = <&can1m1_pins>;
 	pinctrl-names = "default";
     status = "disabled";
 };
