@@ -644,7 +644,7 @@
 	};
 };
 
-&csi2-dphy0 {
+&csi2_dphy0 {
 	ports {
 		#address-cells = <0x01>;
 		#size-cells = <0x00>;
