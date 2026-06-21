@@ -49,11 +49,16 @@
                 pixelclk-active = <0>;
             };
         };
-    
-        port@0 {
-            reg = <0>;
-            edp_panel_ep: endpoint {
-                remote-endpoint = <&edp_psp1_ep>;
+
+        ports {
+            #address-cells = <1>;
+            #size-cells = <0>;
+
+            port@0 {
+                reg = <0>;
+                edp_panel_ep: endpoint {
+                    remote-endpoint = <&edp_psp1_ep>;
+                };
             };
         };
     };
@@ -90,12 +95,17 @@
 			};
 		};
 
-		port@0 {
-            reg = <0>;
-			lvds0_panel_ep: endpoint {
-				remote-endpoint = <&lvds0_p1_ep>;
-			};
-		};
+        ports {
+            #address-cells = <1>;
+            #size-cells = <0>;
+
+            port@0 {
+                reg = <0>;
+                lvds0_panel_ep: endpoint {
+                    remote-endpoint = <&lvds0_p1_ep>;
+                };
+            };
+        };
 	};
 
 	lvds1-panel {
@@ -130,9 +140,13 @@
 		};
 
 		ports {
-			lvds1_panel_ep: endpoint {
-				remote-endpoint = <&lvds1_p1_ep>;
-			};
+            port@0 {
+                reg = <0>;
+
+                lvds1_panel_ep: endpoint {
+                    remote-endpoint = <&lvds1_p1_ep>;
+                };
+            };
 		};
 	};
     
@@ -773,7 +787,7 @@
 			#size-cells = <0x00>;
 			reg = <0x01>;
 
-			edp_psp1_ep: endpoint {
+			edp_psp1_ep: endpoint@0 {
 				reg = <0x00>;
 				remote-endpoint = <&edp_panel_ep>;
 			};
@@ -791,7 +805,7 @@
 	status = "okay";
 
 	simple-audio-card,codec {
-		sound-dai = <&rk809_codec>;
+		sound-dai = <&rk809_codec 0>;
 	};
 
 	simple-audio-card,cpu {
