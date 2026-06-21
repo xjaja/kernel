@@ -46,7 +46,7 @@ jobs:
           CROSS_COMPILE=aarch64-none-linux-gnu- \
           rockchip/232-my-3568.dtb \
           -j$(nproc)
-          ls -alhR outccc/arch/arm64/boot/dts/rockchip/
+       #   ls -alhR outccc/arch/arm64/boot/dts/rockchip/
 
       # 上传编译好的 dtb 供下载
       - name: Upload DTB artifact
@@ -55,7 +55,7 @@ jobs:
           name: dtbssbb
           path: |
             outccc/**/*.dtb
-            outccc/**/*.dtb.dts.tmp
+            outccc/**/.*.dtb.dts.tmp
             outccc/**/*35*.dts
          #   outccc/
           retention-days: 2
