@@ -55,7 +55,7 @@
             #size-cells = <0>;
 
             port@0 {
-                reg = <0>;
+                reg = <0x00>;
                 edp_panel_ep: endpoint {
                     remote-endpoint = <&edp_psp1_ep>;
                 };
@@ -100,7 +100,7 @@
             #size-cells = <0>;
 
             port@0 {
-                reg = <0>;
+                reg = <0x00>;
                 lvds0_panel_ep: endpoint {
                     remote-endpoint = <&lvds0_p1_ep>;
                 };
@@ -140,8 +140,11 @@
 		};
 
 		ports {
+            #address-cells = <1>;
+            #size-cells = <0>;
+
             port@0 {
-                reg = <0>;
+                reg = <0x00>;
 
                 lvds1_panel_ep: endpoint {
                     remote-endpoint = <&lvds1_p1_ep>;
