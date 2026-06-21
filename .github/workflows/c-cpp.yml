@@ -56,7 +56,7 @@ jobs:
             echo "Copy $f -> $dst"
             done
           ' sh {} +
-          ls -alhR outccc/arch/arm64/boot/dts/rockchip/
+      #    ls -alhR outccc/arch/arm64/boot/dts/rockchip/
           
 
       # 上传编译好的 dtb 供下载
@@ -66,7 +66,7 @@ jobs:
           name: dtbssbb
           path: |
             outccc/**/*.dtb
-            outccc/**/.*.dtb.dts.tmp
+            outccc/**/*.dtb.dts.tmp
             outccc/**/*35*.dts
          #   outccc/
           retention-days: 2
