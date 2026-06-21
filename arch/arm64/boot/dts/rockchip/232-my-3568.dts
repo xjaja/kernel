@@ -950,6 +950,10 @@
     //status = "disabled";
 };
 
+&uart2 {
+    status = "okay";
+};
+
 &uart3 {
     pinctrl-0 = <&uart3m1_xfer>;
     status = "okay";
