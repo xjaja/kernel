@@ -50,7 +50,8 @@
             };
         };
     
-        ports {
+        port@0 {
+            reg = <0>;
             edp_panel_ep: endpoint {
                 remote-endpoint = <&edp_psp1_ep>;
             };
@@ -89,7 +90,8 @@
 			};
 		};
 
-		ports {
+		port@0 {
+            reg = <0>;
 			lvds0_panel_ep: endpoint {
 				remote-endpoint = <&lvds0_p1_ep>;
 			};
@@ -212,6 +214,10 @@
     camera-pwr {
 		rockchip,pins = <0x00 0x11 0x00 &pcfg_pull_none_smt>;
 	};
+};
+
+&pmu_io_domains {
+    vccio4-supply = <&vcc_1v8>;
 };
 
 &lvds0 {
@@ -526,7 +532,7 @@
     status = "okay";
 	pinctrl-0 = <&i2c3m1_xfer>;
 
-    mcu@80 {
+    mcu@40 {
 		compatible = "mcu";
 		reg = <0x40>;
 		status = "okay";
@@ -826,7 +832,7 @@
 };
 
 &dsi0 {
-	phys = <0x2f>;
+    #phy-cells = <0>;
 	rockchip,lane-rate = <0x1a4>;
     phy-names = "mipi_dphy";
 	status = "disabled";
