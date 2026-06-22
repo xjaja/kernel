@@ -1064,6 +1064,10 @@
             <0 0 0 4 &pcie2x1_intc_fix 3>;
 };
 
+&pcie3x2_intc {
+    status = "disabled";
+};
+
 &usb2phy0 {
     /delete-property/ assigned-clocks;
     /delete-property/ assigned-clock-parents;
