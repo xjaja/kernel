@@ -167,8 +167,7 @@
         pinctrl-names = "default";
         status = "disabled";
     };
-    
-    
+
     vcc-camera-regulator {
         status = "disabled";
         compatible = "regulator-fixed";
@@ -179,6 +178,19 @@
         regulator-name = "vcc_camera";  
         regulator-min-microvolt = <3300000>;
         regulator-max-microvolt = <3300000>;        
+    };
+
+    pcie2x1_intc_fix: legacy-interrupt-controller-fix {
+        interrupt-controller;
+        #address-cells = <0>;
+        #interrupt-cells = <1>;
+        interrupt-parent = <&gic>;
+        interrupts = <GIC_SPI 72 IRQ_TYPE_EDGE_RISING>;
+
+        clocks = <&cru ACLK_PCIE20_MST>, <&cru PCLK_PCIE20>;
+        clock-names = "aclk_mst", "pclk";
+        resets = <&cru SRST_PCIE20_POWERUP>;
+        reset-names = "mgmt_rst";
     };
 };
 
@@ -1041,4 +1053,27 @@
 
 &vendor_storage_rm {
     status = "disabled"; 
+};
+
+&pcie2x1 {
+    reg = <0x0 0xc0000000 0x0 0x400000>,
+        <0x0 0xfe260000 0x0 0x10000>;
+    interrupt-map = <0 0 0 1 &pcie2x1_intc_fix 0>,
+            <0 0 0 2 &pcie2x1_intc_fix 1>,
+            <0 0 0 3 &pcie2x1_intc_fix 2>,
+            <0 0 0 4 &pcie2x1_intc_fix 3>;
+};
+
+&usb2phy0 {
+    /delete-property/ assigned-clocks;
+    /delete-property/ assigned-clock-parents;
+};
+
+&vcc3v3_lcd0_n {
+	gpio = <&gpio3 RK_PD1 GPIO_ACTIVE_HIGH>;
+};
+
+&vcc3v3_lcd1_n {
+    status = "disabled";
+	gpio = <&gpio3 RK_PC7 GPIO_ACTIVE_HIGH>;
 };
