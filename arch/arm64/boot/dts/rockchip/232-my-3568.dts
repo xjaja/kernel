@@ -233,6 +233,18 @@
     };
 };
 
+&power {
+    pd_npu@RK3568_PD_NPU {
+        #power-domain-cells = <0>;
+        power-supply = <&vdd_npu>;
+        clock-names = "aclk", "hclk", "pclk";
+        resets = <&cru SRST_A_NPU_NIU>,
+                <&cru SRST_H_NPU_NIU>,
+                <&cru SRST_P_NPU_NIU>;
+        reset-names = "aclk", "hclk", "pclk";
+    };
+};
+
 &pmu_io_domains {
     vccio4-supply = <&vcc_1v8>;
 };
