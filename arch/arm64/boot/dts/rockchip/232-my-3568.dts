@@ -999,6 +999,7 @@
 };
 
 &uart2 {
+    dma-names = "!tx\0!rx";
     status = "okay";
 };
 
@@ -1071,6 +1072,11 @@
 &usb2phy0 {
     /delete-property/ assigned-clocks;
     /delete-property/ assigned-clock-parents;
+    clock-output-names = "clk_usbphy0_480m";
+};
+
+&usb2phy1 {
+    clock-output-names = "clk_usbphy1_480m";
 };
 
 &vcc3v3_lcd0_n {
@@ -1080,4 +1086,12 @@
 &vcc3v3_lcd1_n {
     status = "disabled";
 	gpio = <&gpio3 RK_PC7 GPIO_ACTIVE_HIGH>;
+};
+
+&its {
+    status = "disabled";
+};
+
+&vop_mmu {
+	compatible = "rockchip,rk3568-iommu";
 };
