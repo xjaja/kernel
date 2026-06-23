@@ -233,11 +233,13 @@
         };
     };
 
-    /omit-if-no-ref/
-    i2c2m2_xfer: i2c2m2-xfer {
-        rockchip,pins =
-            <4 RK_PB5 0 &pcfg_pull_none_smt>,
-            <4 RK_PB4 0 &pcfg_pull_none_smt>;
+    i2c2 {
+        /omit-if-no-ref/
+        i2c2m2_xfer: i2c2m2-xfer {
+            rockchip,pins =
+                <4 RK_PB5 0 &pcfg_pull_none_smt>,
+                <4 RK_PB4 0 &pcfg_pull_none_smt>;
+        };
     };
 
     camera-pwr {
@@ -289,6 +291,12 @@
 
 &i2c0 {
     rk809_1: pmic@20 {
+        /delete-property/ pinctrl-0;
+        /delete-property/ pinctrl-1;
+        /delete-property/ pinctrl-2;
+        /delete-property/ pinctrl-3;
+        pinctrl-names = "default";
+
         led_red_gpio = <&gpio0 0x06 0x00>;
         power-on-gpios = <&gpio0 0x1b 0x00 &gpio0 0x1c 0x00 &gpio0 0x1d 0x00 &gpio2 0x1d 0x00>;
         codec {
@@ -303,9 +311,13 @@
                 regulator-min-microvolt = <3300000>;
             };
         };
+        pinctrl_rk8xx {
+            status = "disabled";
+        };
     };
 
    syr837@40 {
+        status = "disabled";
         compatible = "silergy,syr827";
         fcs,suspend-voltage-selector = <0x01>;
         reg = <0x40>;
@@ -329,6 +341,7 @@
     };
 
     syr838@41 {
+        status = "disabled";
         compatible = "silergy,syr828";
         fcs,suspend-voltage-selector = <0x01>;
         phandle = <0x18f>;
@@ -351,11 +364,7 @@
             regulator-suspend-microvolt = <1100000>;
         };
     };
-    
-    tcs4525@1c {
-        regulator-name = "vdd_gpu";
-    };
-    
+
     tcs4526@10 {
         compatible = "tcs,tcs452x";
         fcs,suspend-voltage-selector = <0x01>;
@@ -582,6 +591,7 @@
 };
 
 &i2c4 {
+    status = "disabled";
     gc2145@3c {
         compatible = "galaxycore,gc2145";
         reg = <0x3c>;
@@ -1076,6 +1086,7 @@
 &pmucru {
     /delete-property/ assigned-clocks;
     /delete-property/ assigned-clock-parents;
+    rockchip,pmu = <&pmugrf>;
 };
 
 &usb2phy0 {
@@ -1103,4 +1114,43 @@
 
 &vop_mmu {
 	compatible = "rockchip,rk3568-iommu";
+};
+
+&gpu_thermal {
+    trips {
+        gpu_threshold: gpu-threshold {
+            temperature = <70000>;
+            hysteresis = <2000>;
+            type = "passive";
+        };
+        gpu_target: gpu-target {
+            temperature = <75000>;
+            hysteresis = <2000>;
+            type = "passive";
+        };
+        gpu_crit: gpu-crit {
+            temperature = <95000>;
+            hysteresis = <2000>;
+            type = "critical";
+        };
+    };
+
+    cooling-maps {
+        map0 {
+            trip = <&gpu_target>;
+            cooling-device =
+            <&gpu THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+        };
+    };
+};
+
+&dfi {
+    rockchip,pmu = <&pmugrf>;
+};
+
+&otp {
+    // 6.2 kernel
+    //clock-names = "usr", "sbpi", "apb_pclk", "phy";
+    clock-names = "otp", "apb_pclk", "phy";
+    reset-names = "phy";
 };
