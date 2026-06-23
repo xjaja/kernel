@@ -900,6 +900,10 @@
     };
 };
 
+&gmac0 {
+    status = "disabled";
+};
+
 &gmac1 {
     phy-mode = "rmii";
 
@@ -1067,6 +1071,11 @@
 
 &pcie3x2_intc {
     status = "disabled";
+};
+
+&pmucru {
+    /delete-property/ assigned-clocks;
+    /delete-property/ assigned-clock-parents;
 };
 
 &usb2phy0 {
