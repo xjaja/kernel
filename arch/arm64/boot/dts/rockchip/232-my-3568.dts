@@ -1013,6 +1013,8 @@
 };
 
 &uart2 {
+    reg-io-width = <4>;
+	reg-shift = <2>;
     dma-names = "!tx\0!rx";
     status = "okay";
 };
@@ -1154,3 +1156,34 @@
     clock-names = "otp", "apb_pclk", "phy";
     reset-names = "phy";
 };
+
+&usbdrd_dwc3 {
+    compatible = "rockchip,rk3568-dwc3", "snps,dwc3";
+    clocks = <&cru CLK_USB3OTG1_REF>, <&cru CLK_USB3OTG1_SUSPEND>,<&cru ACLK_USB3OTG1>;
+    clock-names = "ref_clk", "suspend_clk", "bus_clk";
+};
+
+&usbhost_dwc3 {
+    compatible = "rockchip,rk3568-dwc3", "snps,dwc3";
+    clocks = <&cru CLK_USB3OTG1_REF>, <&cru CLK_USB3OTG1_SUSPEND>,<&cru ACLK_USB3OTG1>;
+    clock-names = "ref_clk", "suspend_clk", "bus_clk";
+};
+
+&combphy0_us {
+    clock-names = "ref", "apb", "pipe";
+};
+
+&combphy1_usq {
+    clock-names = "ref", "apb", "pipe";
+};
+
+&combphy2_psq {
+    clock-names = "ref", "apb", "pipe";
+};
+
+&edp_phy {
+    clock-names = "ref";
+};
+
+
+
