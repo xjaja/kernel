@@ -1157,28 +1157,71 @@
     reset-names = "phy";
 };
 
-&usbdrd_dwc3 {
-    compatible = "rockchip,rk3568-dwc3", "snps,dwc3";
-    clocks = <&cru CLK_USB3OTG1_REF>, <&cru CLK_USB3OTG1_SUSPEND>,<&cru ACLK_USB3OTG1>;
+&usbdrd30 {
+    clocks = <&cru CLK_USB3OTG0_REF>,
+            <&cru CLK_USB3OTG0_SUSPEND>,
+            <&cru ACLK_USB3OTG0>;
     clock-names = "ref_clk", "suspend_clk", "bus_clk";
+    
+    usbdrd_dwc3: dwc3@fcc00000 {
+        clocks = <&cru CLK_USB3OTG0_REF>,
+                <&cru CLK_USB3OTG0_SUSPEND>,
+                <&cru ACLK_USB3OTG0>;
+        clock-names = "ref_clk", "suspend_clk", "bus_clk";
+        /delete-property/ reset-names;
+        /delete-property/ snps,dis_enblslpm_quirk;
+        /delete-property/ snps,dis-u1-entry-quirk;
+        /delete-property/ snps,dis-u2-entry-quirk;
+        /delete-property/ snps,dis-u2-freeclk-exists-quirk;
+        /delete-property/ snps,dis-del-phy-power-chg-quirk;
+        /delete-property/ snps,dis-tx-ipgap-linecheck-quirk;
+        /delete-property/ snps,dis_rxdet_inp3_quirk;
+        /delete-property/ snps,parkmode-disable-hs-quirk;
+        /delete-property/ snps,parkmode-disable-ss-quirk;
+        /delete-property/ quirk-skip-phy-init;
+        snps,dis_u2_susphy_quirk;
+        extcon = <&usb2phy0>;
+    };
 };
 
-&usbhost_dwc3 {
-    compatible = "rockchip,rk3568-dwc3", "snps,dwc3";
-    clocks = <&cru CLK_USB3OTG1_REF>, <&cru CLK_USB3OTG1_SUSPEND>,<&cru ACLK_USB3OTG1>;
-    clock-names = "ref_clk", "suspend_clk", "bus_clk";
+usbhost30: usbhost {
+    clocks = <&cru CLK_USB3OTG1_REF>,
+            <&cru CLK_USB3OTG1_SUSPEND>,
+            <&cru ACLK_USB3OTG1>;
+    clock-names = "ref_clk", "suspend_clk",
+                "bus_clk";
+
+    usbhost_dwc3: dwc3@fd000000 {
+        compatible = "rockchip,rk3568-dwc3", "snps,dwc3";
+        clocks = <&cru CLK_USB3OTG1_REF>, <&cru CLK_USB3OTG1_SUSPEND>,<&cru ACLK_USB3OTG1>;
+        clock-names = "ref_clk", "suspend_clk", "bus_clk";
+        /delete-property/ snps,dis_enblslpm_quirk;
+        /delete-property/ snps,dis-u2-freeclk-exists-quirk;
+        /delete-property/ snps,dis-del-phy-power-chg-quirk;
+        /delete-property/ snps,dis-tx-ipgap-linecheck-quirk;
+        /delete-property/ snps,dis_rxdet_inp3_quirk;
+        /delete-property/ snps,parkmode-disable-hs-quirk;
+        /delete-property/ snps,parkmode-disable-ss-quirk;
+        snps,dis_u2_susphy_quirk;
+    };
 };
 
 &combphy0_us {
     clock-names = "ref", "apb", "pipe";
+    resets = <&cru SRST_PIPEPHY0>;
+    reset-names = "phy";
 };
 
 &combphy1_usq {
     clock-names = "ref", "apb", "pipe";
+    resets = <&cru SRST_PIPEPHY1>;
+    reset-names = "phy";
 };
 
 &combphy2_psq {
     clock-names = "ref", "apb", "pipe";
+    resets = <&cru SRST_PIPEPHY2>;
+    reset-names = "phy";
 };
 
 &edp_phy {
