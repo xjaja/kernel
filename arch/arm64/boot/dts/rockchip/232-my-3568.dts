@@ -14,7 +14,7 @@
 
     backlight2 {
         default-brightness-level = <0x80>;
-        enable-gpios = <&gpio3 0x18 0x00>;
+        // enable-gpios = <&gpio3 0x18 0x00>;
         lcd_backlight_max = <0xff>;
         lcd_backlight_min = <0x32>;
         lcd_pwm_pol = <0x01>;
@@ -165,7 +165,7 @@
         compatible = "gpio-innohi";
         pinctrl-0 = <&own_gpp>;
         pinctrl-names = "default";
-        status = "disabled";
+        status = "okay";
     };
 
     vcc-camera-regulator {
@@ -214,7 +214,7 @@
     lcd_backlight_max = <0xff>;
     lcd_backlight_min = <0x32>;
     lcd_pwm_pol = <0x01>;
-    enable-gpios = <&gpio3 0x1c 0x00>;
+    enable-gpios = <&gpio3 0x18 0x00>;
     pwms = <&pwm7 0 25000 0>;
     status = "disabled";
 };
@@ -222,7 +222,18 @@
 &pinctrl {
     own_gpio {
         own_gpp: own-gpio-pins {
-            rockchip,pins = <0x03 0x19 0x00 0x12c 0x03 0x1c 0x00 0x12c 0x03 0x1d 0x00 0x12c 0x00 0x06 0x00 0x12c 0x00 0x0f 0x00 0x12c 0x00 0x1b 0x00 0x12c 0x00 0x1c 0x00 0x12c 0x00 0x1d 0x00 0x12c 0x02 0x1d 0x00 0x12c 0x04 0x12 0x00 0x12c 0x04 0x13 0x00 0x12c 0x04 0x14 0x00 0x12c>;
+            <0x03 0x19 0x00 &pcfg_pull_none>, // vcc3v3_lcd0_n
+            <0x03 0x1c 0x00 &pcfg_pull_none>, // backlight
+            <0x03 0x1d 0x00 &pcfg_pull_none>, // lvds-panel
+            <0x00 0x06 0x00 &pcfg_pull_none>, // pmic@20/led_red_gpio
+            <0x00 0x0f 0x00 &pcfg_pull_none>,
+            <0x00 0x1b 0x00 &pcfg_pull_none>, // power-on-gpios
+            <0x00 0x1c 0x00 &pcfg_pull_none>, //-[-
+            <0x00 0x1d 0x00 &pcfg_pull_none>, //-[-
+            <0x02 0x1d 0x00 &pcfg_pull_none>, //-[-
+            <0x04 0x12 0x00 &pcfg_pull_none>,
+            <0x04 0x13 0x00 &pcfg_pull_none>,
+            <0x04 0x14 0x00 &pcfg_pull_none>;
         };
     };
 
@@ -915,6 +926,7 @@
 };
 
 &gmac1 {
+    /delete-property/ phy-supply;
     phy-mode = "rmii";
 
     snps,reset-gpio = <&gpio4 0x0b GPIO_ACTIVE_LOW>;
@@ -1203,6 +1215,7 @@
         /delete-property/ snps,parkmode-disable-hs-quirk;
         /delete-property/ snps,parkmode-disable-ss-quirk;
         snps,dis_u2_susphy_quirk;
+      //  maximum-speed = "high-speed";
     };
 };
 
@@ -1224,9 +1237,31 @@
     reset-names = "phy";
 };
 
+&u2phy0_host {
+	phy-supply = <&vcc5v0_otg>;
+};
+
+&u2phy0_otg {
+	phy-supply = <&vcc5v0_otg>;
+    vbus-supply = <&vcc5v0_otg>;
+};
+
+&u2phy1_host {
+	phy-supply = <&vcc5v0_otg>;
+};
+
+&u2phy1_otg {
+	phy-supply = <&vcc5v0_otg>;
+};
+
 &edp_phy {
     clock-names = "ref";
 };
 
+&vcc5v0_host {
+    status = "disabled"; // fk understand
+};
 
-
+&qsgmii_3v3 {
+    status = "disabled"; // fk understand
+};
