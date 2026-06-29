@@ -303,10 +303,10 @@
 
 &i2c0 {
     rk809_1: pmic@20 {
-        /delete-property/ pinctrl-0;
-        /delete-property/ pinctrl-1;
-        /delete-property/ pinctrl-2;
-        /delete-property/ pinctrl-3;
+        // /delete-property/ pinctrl-0;
+        // /delete-property/ pinctrl-1;
+        // /delete-property/ pinctrl-2;
+        // /delete-property/ pinctrl-3;
         pinctrl-names = "default";
 
         led_red_gpio = <&gpio0 0x06 0x00>;
@@ -324,7 +324,7 @@
             };
         };
         pinctrl_rk8xx {
-            status = "disabled";
+            //status = "disabled";
         };
     };
 
@@ -1115,7 +1115,7 @@
 };
 
 &vcc3v3_lcd0_n {
-	gpio = <&gpio3 RK_PD1 GPIO_ACTIVE_HIGH>;
+	gpio = <&gpio3 0x19 0x00>;
 };
 
 &vcc3v3_lcd1_n {
@@ -1265,4 +1265,12 @@
 
 &qsgmii_3v3 {
     status = "disabled"; // fk understand
+};
+
+&leds {
+    status = "disabled";
+};
+
+&sdhci {
+    mmc-no-pwrseq;
 };
