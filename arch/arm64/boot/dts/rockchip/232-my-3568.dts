@@ -302,12 +302,42 @@
 };
 
 &i2c0 {
+    pinctrl_rk8xx_bak: pinctrl_rk8xx_bak {
+        gpio-controller;
+        #gpio-cells = <2>;
+        
+        rk817_slppin_null_bak: rk817_slppin_null_bak {
+            pins = "gpio_slp";
+            function = "pin_fun0";
+        };
+        
+        rk817_slppin_slp_bak: rk817_slppin_slp_bak {
+            pins = "gpio_slp";
+            function = "pin_fun1";
+        };
+        
+        rk817_slppin_pwrdn_bak: rk817_slppin_pwrdn_bak {
+            pins = "gpio_slp";
+            function = "pin_fun2";
+        };
+        
+        rk817_slppin_rst_bak: rk817_slppin_rst_bak {
+            pins = "gpio_slp";
+            function = "pin_fun3";
+        };
+    };
+
     rk809_1: pmic@20 {
         // /delete-property/ pinctrl-0;
         // /delete-property/ pinctrl-1;
         // /delete-property/ pinctrl-2;
         // /delete-property/ pinctrl-3;
-        pinctrl-names = "default";
+        pinctrl-names = "default", "pmic-sleep",
+                "pmic-power-off", "pmic-reset";
+        pinctrl-0 = <&pmic_int>;
+        pinctrl-1 = <&soc_slppin_slp>, <&rk817_slppin_slp_bak>;
+        pinctrl-2 = <&soc_slppin_gpio>, <&rk817_slppin_pwrdn_bak>;
+        pinctrl-3 = <&soc_slppin_gpio>, <&rk817_slppin_rst_bak>;
 
         led_red_gpio = <&gpio0 0x06 0x00>;
         power-on-gpios = <&gpio0 0x1b 0x00 &gpio0 0x1c 0x00 &gpio0 0x1d 0x00 &gpio2 0x1d 0x00>;
@@ -324,7 +354,7 @@
             };
         };
         pinctrl_rk8xx {
-            //status = "disabled";
+            status = "disabled";
         };
     };
 
@@ -1086,8 +1116,12 @@
 };
 
 &pcie2x1 {
-    reg = <0x0 0xc0000000 0x0 0x400000>,
-        <0x0 0xfe260000 0x0 0x10000>;
+    //reg = <0x0 0xc0000000 0x0 0x400000>,
+    //    <0x0 0xfe260000 0x0 0x10000>;
+    reg = <0x3 0xc0000000 0x0 0x00400000>,
+        <0x0 0xfe260000 0x0 0x00010000>,
+        <0x0 0xf4000000 0x0 0x00100000>;
+    reg-names = "dbi", "apb", "config";
     interrupt-map = <0 0 0 1 &pcie2x1_intc_fix 0>,
             <0 0 0 2 &pcie2x1_intc_fix 1>,
             <0 0 0 3 &pcie2x1_intc_fix 2>,
@@ -1166,6 +1200,8 @@
 &otp {
     // 6.2 kernel
     //clock-names = "usr", "sbpi", "apb_pclk", "phy";
+    clocks = <&cru CLK_OTPC_NS_USR>,
+        <&cru PCLK_OTPC_NS>, <&cru PCLK_OTPPHY>;
     clock-names = "otp", "apb_pclk", "phy";
     reset-names = "phy";
 };
