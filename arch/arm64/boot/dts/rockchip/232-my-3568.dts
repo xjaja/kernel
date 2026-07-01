@@ -192,6 +192,14 @@
         resets = <&cru SRST_PCIE20_POWERUP>;
         reset-names = "mgmt_rst";
     };
+    
+    wifi-aic8800 {
+        compatible = "aicsemi,aic8800", "aicsemi,aic8800-wlan";
+        // mmc-pwrseq = <&sdio_pwrseq>;
+        wifi-power-gpios = <&gpio2 9 0>;
+        //wifi-reset-gpios = <&gpio2 xx 0>;  // xx替换成实际复位引脚号
+        status = "disabled";
+    };
 };
 
 &chosen {
@@ -1309,4 +1317,12 @@
 
 &sdhci {
     mmc-no-pwrseq;
+};
+
+&wireless_wlan {
+    status = "disabled";
+};
+
+&sdmmc1 {
+    /delete-property/ mmc-pwrseq;
 };
