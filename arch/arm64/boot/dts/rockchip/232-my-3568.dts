@@ -1325,4 +1325,12 @@
 
 &sdmmc1 {
     /delete-property/ mmc-pwrseq;
+    supports-sdio;
+    wifi-special-type = <0x01>;
+};
+
+&sdio_pwrseq {
+    clocks = <&rk809 1>;
+    pinctrl-0 = <&wifi_enable_h>;
+    status = "disabled";
 };
