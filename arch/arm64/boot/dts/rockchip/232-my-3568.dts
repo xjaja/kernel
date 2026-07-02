@@ -195,7 +195,7 @@
     
     wifi-aic8800 {
         compatible = "aicsemi,aic8800", "aicsemi,aic8800-wlan";
-        pinctrl-0 = <&wifi_enable_h, &wifi_32k>;
+        pinctrl-0 = <&wifi_enable_h>, <&wifi_32k>;
         // mmc-pwrseq = <&sdio_pwrseq>;
         wifi-power-gpios = <&gpio2 9 0>;
         //wifi-reset-gpios = <&gpio2 9 1>;
