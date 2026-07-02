@@ -195,9 +195,10 @@
     
     wifi-aic8800 {
         compatible = "aicsemi,aic8800", "aicsemi,aic8800-wlan";
+        pinctrl-0 = <&wifi_enable_h, &wifi_32k>;
         // mmc-pwrseq = <&sdio_pwrseq>;
         wifi-power-gpios = <&gpio2 9 0>;
-        //wifi-reset-gpios = <&gpio2 xx 0>;  // xx替换成实际复位引脚号
+        //wifi-reset-gpios = <&gpio2 9 1>;
         status = "disabled";
     };
 };
@@ -1327,6 +1328,7 @@
     /delete-property/ mmc-pwrseq;
     supports-sdio;
     wifi-special-type = <0x01>;
+    cap-sdio-irq;
 };
 
 &sdio_pwrseq {
